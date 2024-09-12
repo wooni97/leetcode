@@ -3,19 +3,19 @@ class Solution {
         int n = s.length();
         int left = 0;
         int maxLength = 0;
-        Set<Character> charSet = new HashSet<>();
+        boolean[] check = new boolean[127];
 
         for(int right = 0; right < n; right++) {
-            if(!charSet.contains(s.charAt(right))) {
-                charSet.add(s.charAt(right));
+            if(!check[s.charAt(right)]){
+                check[s.charAt(right)] = true;
                 maxLength = Math.max(maxLength, right - left + 1);
             } else {
-                while(charSet.contains(s.charAt(right))) {
-                    charSet.remove(s.charAt(left));
+                while(check[s.charAt(right)]) {
+                    check[s.charAt(left)] = false;
                     left++;
                 }
 
-                charSet.add(s.charAt(right));
+                check[s.charAt(right)] = true;
             }
         }
 
